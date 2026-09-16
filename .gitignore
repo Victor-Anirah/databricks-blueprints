@@ -1,0 +1,12 @@
+# Secrets. This repo is meant to be PUBLIC.
+.env
+
+# Raw landed data: large, and re-fetchable from the source any time.
+data/
+
+# Private build notes. They feed the content engine; publish a cleaned write-up instead.
+NOTES.md
+
+__pycache__/
+*.pyc
+.DS_Store
