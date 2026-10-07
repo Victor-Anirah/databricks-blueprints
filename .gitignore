@@ -10,3 +10,6 @@ NOTES.md
 __pycache__/
 *.pyc
 .DS_Store
+
+# Personal run sheets: demo script and build notes stay local.
+DEMO.md
