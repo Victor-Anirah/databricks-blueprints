@@ -99,3 +99,25 @@ ORDER BY respondent;
 -- COMMAND ----------
 
 DESCRIBE TABLE workspace.grid.bronze_eia_region_demand;
+
+-- COMMAND ----------
+
+-- MAGIC %md
+-- MAGIC ## Step 5 · Did anything fail to fit the schema?
+-- MAGIC `read_files` puts any field it could not match into `_rescued_data` instead of failing the load. That is the behaviour you want, but it is silent, so it has to be checked. Zero means the schema held across all 14 files. Anything above zero is a finding: look at a sample and find out which file and which field.
+
+-- COMMAND ----------
+
+SELECT
+  count(*)                                AS rows_total,
+  count_if(_rescued_data IS NOT NULL)      AS rows_rescued,
+  count(DISTINCT _source_file)             AS source_files
+FROM workspace.grid.bronze_eia_region_demand;
+
+-- COMMAND ----------
+
+-- Only returns anything if the check above is non-zero.
+SELECT _source_file, _rescued_data
+FROM workspace.grid.bronze_eia_region_demand
+WHERE _rescued_data IS NOT NULL
+LIMIT 20;
